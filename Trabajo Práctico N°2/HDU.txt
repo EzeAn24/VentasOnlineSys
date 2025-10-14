@@ -1,0 +1,89 @@
+---1---
+Como cliente nuevo
+Quiero registrarme en el sistema ingresando mis datos personales y un método de pago
+Para poder realizar compras de productos de manera online
+
+Criterios de aceptación:
+-El sistema debe solicitar nombre, apellido, correo electrónico, contraseña, teléfono y dirección.
+-Si el correo ya existe, debe mostrar un mensaje de error.
+
+---2---
+Como cliente registrado
+Quiero iniciar sesión con mi correo y contraseña
+Para acceder a mi cuenta y ver mis compras o mi carrito activo
+
+Criterios de aceptación:
+El sistema valida que el correo y la contraseña coincidan con un usuario registrado.
+Si los datos son incorrectos, debe mostrar un mensaje de error.
+
+---3---
+Como cliente
+Quiero agregar, eliminar o actualizar productos en mi carrito de compras
+Para organizar los artículos que deseo comprar antes de realizar el pedido
+
+Criterios de aceptación:
+-Puedo agregar productos disponibles en stock indicando la cantidad.
+-Si la cantidad supera el stock, el sistema muestra un mensaje de advertencia.
+-Puedo eliminar un producto del carrito en cualquier momento.
+-El sistema recalcula automáticamente el subtotal y el total.
+
+---4---
+Como cliente
+Quiero finalizar mi carrito de compras y generar un pedido
+Para confirmar mi compra y proceder al pago
+
+Criterios de aceptación:
+-Solo se puede finalizar un carrito en estado ACTIVO.
+-El sistema genera un pedido con estado PENDIENTE_PAGO y muestra el total a abonar.
+-Se asocia el método de pago seleccionado.
+-Si la transacción se procesa correctamente, el pedido pasa a estado PENDIENTE_ENVÍO.
+
+---5---
+Como cliente
+Quiero ver el estado de mi envío y su número de rastreo
+Para saber en qué etapa se encuentra mi pedido hasta su entrega
+
+Criterios de aceptación:
+-El sistema debe mostrar los estados posibles: PENDIENTE_ENVÍO, EN_CAMINO, ENTREGADO.
+-Debe visualizarse el número de rastreo y la empresa de transporte.
+-Cuando el pedido se marque como ENTREGADO, ya no puede modificarse.
+
+---6---
+Como responsable de logística
+Quiero gestionar el stock de productos y preparar los pedidos
+Para mantener la trazabilidad de los productos y asegurar la disponibilidad en almacén
+
+Criterios de aceptación:
+-Se puede consultar el stock actual de cada producto.
+-Al preparar un pedido, el sistema descuenta el stock correspondiente.
+-El sistema permite reasignar pedidos a distintos almacenes según disponibilidad.
+
+---7---
+Como administrador del sistema
+Quiero registrar compras a proveedores para reponer productos en el inventario
+Para mantener los niveles de stock y evitar quiebres de stock
+
+Criterios de aceptación:
+-Se debe registrar proveedor, fecha de compra y lista de productos adquiridos.
+-Al confirmar la compra, se actualiza el stock de los productos.
+-El sistema guarda un historial de compras a proveedores.
+
+---8---
+Como cliente
+Quiero administrar mis métodos de pago registrados
+Para poder elegir o modificar cómo pagar mis pedidos
+
+Criterios de aceptación:
+-Puedo agregar un nuevo método de pago (debito, credito, etc.) con sus detalles.
+-Puedo eliminar o actualizar un método existente.
+-El sistema valida los datos ingresados antes de guardarlos.
+
+---9---
+Como responsable de logística
+Quiero confirmar la entrega de un pedido
+Para completar el ciclo del pedido y actualizar su estado final
+
+Criterios de aceptación:
+-Solo los pedidos en estado EN_CAMINO pueden pasar a ENTREGADO.
+-El sistema registra la fecha de entrega efectiva.
+-Una vez entregado, el pedido no puede modificarse ni cancelarse.
