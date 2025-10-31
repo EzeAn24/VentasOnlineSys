@@ -1,0 +1,105 @@
+classDiagram
+    direction LR
+    
+    %% Paquete: Singleton (Req 3)
+    namespace com_tp_config {
+        class GestorConfiguracion {
+            <<Singleton>>
+            - instancia : GestorConfiguracion$
+            - urlBd : String
+            - userBd : String
+            - pathReportes : String
+            - GestorConfiguracion()
+            + getInstancia() GestorConfiguracion$
+            + getPathReportes() String
+        }
+    }
+    
+    %% Paquete: Builder (Req 2)
+    namespace com_tp_reporte {
+        class Reporte {
+            - titulo : String
+            - cuerpoPrincipal : String
+            - encabezado : String
+            - pieDePagina : String
+            - fecha : LocalDate
+            - autor : String
+            - orientacion : Orientacion
+            - Reporte(ReporteBuilder)
+            + getTitulo() String
+        }
+        
+        class ReporteBuilder {
+            <<Builder>>
+            - titulo : String
+            - cuerpoPrincipal : String
+            - encabezado : String
+            - pieDePagina : String
+            - fecha : LocalDate
+            - autor : String
+            - orientacion : Orientacion
+            + ReporteBuilder(String, String)
+            + conEncabezado(String) ReporteBuilder
+            + conPieDePagina(String) ReporteBuilder
+            + conFecha(LocalDate) ReporteBuilder
+            + conAutor(String) ReporteBuilder
+            + conOrientacion(Orientacion) ReporteBuilder
+            + build() Reporte
+        }
+        
+        class Orientacion {
+            <<enumeration>>
+            VERTICAL
+            HORIZONTAL
+        }
+    }
+    
+    %% Paquete: Factory (Req 1)
+    namespace com_tp_renderizado {
+        class IRenderizador {
+            <<interface>>
+            + renderizar(Reporte)
+        }
+        
+        class RenderizadorPDF {
+            + renderizar(Reporte)
+        }
+        
+        class RenderizadorExcel {
+            + renderizar(Reporte)
+        }
+        
+        class RenderizadorCSV {
+            + renderizar(Reporte)
+        }
+        
+        class RenderizadorFactory {
+            <<Factory>>
+            + crearRenderizador(String) IRenderizador$
+        }
+    }
+    
+    %% Paquete: Principal (Cliente)
+    namespace com_tp {
+        class Main {
+            + main(String[])$ void
+        }
+    }
+    
+    %% Relaciones del Builder
+    Reporte *-- ReporteBuilder : contains
+    ReporteBuilder ..> Reporte : construye
+    Reporte *-- Orientacion : uses
+    
+    %% Relaciones del Factory
+    IRenderizador <|.. RenderizadorPDF : implements
+    IRenderizador <|.. RenderizadorExcel : implements
+    IRenderizador <|.. RenderizadorCSV : implements
+    RenderizadorFactory ..> IRenderizador : crea
+    IRenderizador ..> Reporte : usa
+    
+    %% Relaciones entre Paquetes (Cliente)
+    Main ..> GestorConfiguracion : usa getInstancia
+    Main ..> ReporteBuilder : usa build
+    Main ..> RenderizadorFactory : usa crear
+    Main ..> IRenderizador : usa renderizar
